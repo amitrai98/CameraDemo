@@ -5,6 +5,8 @@ import com.example.amit.camerademo.api.models.ImageUploadResponse;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -18,5 +20,10 @@ public interface ApiTask {
                 @Header("user-session-token") String loginToken, @Header("user-id") String userId,
                 @Part MultipartBody.Part[] receiptImages
         );
+
+    @Multipart
+    @POST("retrofit_example/upload_image.php")
+    Call<ImageUploadResponse> uploadFile(@Part MultipartBody.Part file,
+                                         @Part("file") RequestBody name);
 
     }

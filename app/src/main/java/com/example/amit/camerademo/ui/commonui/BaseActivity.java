@@ -3,9 +3,12 @@ package com.example.amit.camerademo.ui.commonui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -17,11 +20,13 @@ public abstract class BaseActivity extends NetworkStatusCheckActivity {
     private Toolbar mToolbar;
     protected TextView mToolbarTitle;
     private String TAG = getClass().getSimpleName();
+    CoordinatorLayout coordinator = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        coordinator= findViewById(R.id.coordinator);
         initViews();
         initNetworkErrorDialog();
 
@@ -57,5 +62,17 @@ public abstract class BaseActivity extends NetworkStatusCheckActivity {
     protected void onNetworkDisconnected() {
         networkErrorDialog.show();
 
+    }
+
+    public void showSnackBarMessage(String message){
+        final Snackbar snackBar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+
+        snackBar.setAction("Ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackBar.dismiss();
+            }
+        });
+        snackBar.show();
     }
 }
