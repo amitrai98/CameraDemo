@@ -20,13 +20,11 @@ public abstract class BaseActivity extends NetworkStatusCheckActivity {
     private Toolbar mToolbar;
     protected TextView mToolbarTitle;
     private String TAG = getClass().getSimpleName();
-    CoordinatorLayout coordinator = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        coordinator= findViewById(R.id.coordinator);
         initViews();
         initNetworkErrorDialog();
 
@@ -64,15 +62,5 @@ public abstract class BaseActivity extends NetworkStatusCheckActivity {
 
     }
 
-    public void showSnackBarMessage(String message){
-        final Snackbar snackBar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
 
-        snackBar.setAction("Ok", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackBar.dismiss();
-            }
-        });
-        snackBar.show();
-    }
 }
