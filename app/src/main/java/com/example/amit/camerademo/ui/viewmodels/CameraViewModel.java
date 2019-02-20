@@ -32,24 +32,17 @@ import com.example.amit.camerademo.api.models.ImageUploadResponse;
 import com.example.amit.camerademo.ui.activities.HomeScreen;
 import com.example.amit.camerademo.ui.commonui.BaseActivity;
 import com.example.amit.camerademo.ui.fragments.CameraFragment;
-import com.example.amit.camerademo.util.Utility;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
-import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public class CameraViewModel extends ViewModel {
     public static final int TAKE_PHOTO_CODE = 101;
@@ -62,9 +55,14 @@ public class CameraViewModel extends ViewModel {
     public ObservableField<Integer> enableUpload = new ObservableField<>(new Integer(View.GONE));
     public ObservableField<Integer> uploading = new ObservableField<>(new Integer(View.GONE));
     public ObservableField<Uri> imageuri = new ObservableField<>();
+    public ObservableField<Boolean> openCameraEnable = new ObservableField<>(true);
+    public ObservableField<Boolean> uploadEnabled = new ObservableField<>(true);
 
 
-
+    /**
+     * constructor
+     * @param cameraFragment instance
+     */
     public CameraViewModel(CameraFragment cameraFragment){
         this.cameraFragment = cameraFragment;
         profileImage = new ObservableField<>();
@@ -77,6 +75,10 @@ public class CameraViewModel extends ViewModel {
 
 
     }
+
+    /**
+     * opens camera and checks for runtime permission
+     */
     public void openCamera(){
         Log.e(TAG, "i was called");
         if (ActivityCompat.checkSelfPermission(cameraFragment.getContext(),
@@ -90,35 +92,36 @@ public class CameraViewModel extends ViewModel {
     }
 
 
+    /**
+     * uploads image on server.
+     */
     public void uploadImage(){
-        Log.e(TAG, "upload image");
-
         uploading.set(View.VISIBLE);
-
+        uploadEnabled.set(false);
+        openCameraEnable.set(false);
         ApiTask apiTask = ApiServiceFactory.getInstance().getApiTask();
-//        apiTask.uploadFile(new File(imageUrl), "")
-
-                //creating a file
         File file = new File(imageUrl.get());
         RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
         RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
         Call<ImageUploadResponse> call = apiTask.uploadFile(fileToUpload, filename);
-
         call.enqueue(new Callback<ImageUploadResponse>() {
             @Override
             public void onResponse(Call<ImageUploadResponse> call, Response<ImageUploadResponse> response) {
                 uploading.set(View.GONE);
+                uploadEnabled.set(true);
+                openCameraEnable.set(true);
                 Log.e(TAG, ""+response.raw().message());
                 if (cameraFragment.getActivity() instanceof HomeScreen){
                     HomeScreen activity = (HomeScreen) cameraFragment.getActivity();
-                    activity.showSnackBarMessage("Image to uploaded successfully");
+                    activity.showSnackBarMessage("Image uploaded successfully");
                 }
             }
             @Override
             public void onFailure(Call<ImageUploadResponse> call, Throwable t) {
                 uploading.set(View.GONE);
+                uploadEnabled.set(true);
+                openCameraEnable.set(true);
                 if (cameraFragment.getActivity() instanceof HomeScreen){
                     HomeScreen activity = (HomeScreen) cameraFragment.getActivity();
                     activity.showSnackBarMessage("Unable to upload image");
@@ -131,14 +134,12 @@ public class CameraViewModel extends ViewModel {
     }
 
 
-
-
-
+    /**
+     * handles image source changes using mvvm in image view.
+     */
     public class BindableFieldTarget implements Target {
-
         private ObservableField<Drawable> observableField;
         private Resources resources;
-
         public BindableFieldTarget(ObservableField<Drawable> observableField, Resources resources) {
             this.observableField = observableField;
             this.resources = resources;

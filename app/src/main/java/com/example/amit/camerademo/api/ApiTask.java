@@ -15,14 +15,14 @@ import retrofit2.http.Part;
 public interface ApiTask {
 
         @Multipart
-        @POST("parser")
+        @POST("/api/beta/content.php?cid=cb92564d4062bae4e5cde57650b88c9a")
         Observable<ImageUploadResponse> uploadImage(
                 @Header("user-session-token") String loginToken, @Header("user-id") String userId,
                 @Part MultipartBody.Part[] receiptImages
         );
 
     @Multipart
-    @POST("retrofit_example/upload_image.php")
+    @POST("/api/beta/content.php?cid=cb92564d4062bae4e5cde57650b88c9a")
     Call<ImageUploadResponse> uploadFile(@Part MultipartBody.Part file,
                                          @Part("file") RequestBody name);
 

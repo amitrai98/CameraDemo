@@ -35,12 +35,15 @@
 
         <Button
             android:id="@+id/uploadImage"
+            android:clickable="@{viewmodel.uploadEnabled}"
             android:visibility="@{viewmodel.enableUpload}"
             android:layout_below="@+id/cameraPicture"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
             android:onClick="@{() -> viewmodel.uploadImage()}"
             android:text="Upload"/>
 
@@ -57,11 +60,13 @@
 
         <Button
             android:id="@+id/openCamera"
+            android:clickable="@{viewmodel.openCameraEnable}"
+            android:background="@drawable/camerabutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:onClick="@{() -> viewmodel.openCamera()}"
-            android:text="open camera"/>
+            />
     </RelativeLayout>
 
 </FrameLayout>
