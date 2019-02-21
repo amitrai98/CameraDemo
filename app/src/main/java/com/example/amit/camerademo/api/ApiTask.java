@@ -14,16 +14,9 @@ import retrofit2.http.Part;
 
 public interface ApiTask {
 
-        @Multipart
-        @POST("/api/beta/content.php?cid=cb92564d4062bae4e5cde57650b88c9a")
-        Observable<ImageUploadResponse> uploadImage(
-                @Header("user-session-token") String loginToken, @Header("user-id") String userId,
-                @Part MultipartBody.Part[] receiptImages
-        );
-
     @Multipart
     @POST("/api/beta/content.php?cid=cb92564d4062bae4e5cde57650b88c9a")
     Call<ImageUploadResponse> uploadFile(@Part MultipartBody.Part file,
-                                         @Part("file") RequestBody name);
+                                         @Part("type") RequestBody name);
 
     }

@@ -13,11 +13,7 @@ public class ApiRepository implements ApiTask {
         this.apiTask = apiTask;
     }
 
-    @Override
-    public Observable<ImageUploadResponse> uploadImage(String loginToken, String userId,
-                                                         MultipartBody.Part[] receiptImages) {
-        return apiTask.uploadImage(loginToken, userId, receiptImages);
-    }
+
 
     @Override
     public Call<ImageUploadResponse> uploadFile(MultipartBody.Part file, RequestBody name) {

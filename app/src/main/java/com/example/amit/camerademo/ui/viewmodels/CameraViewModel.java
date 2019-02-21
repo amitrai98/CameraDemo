@@ -102,9 +102,9 @@ public class CameraViewModel extends ViewModel {
         ApiTask apiTask = ApiServiceFactory.getInstance().getApiTask();
         File file = new File(imageUrl.get());
         RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-        Call<ImageUploadResponse> call = apiTask.uploadFile(fileToUpload, filename);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("type", "media", mFile);
+//        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+        Call<ImageUploadResponse> call = apiTask.uploadFile(fileToUpload, mFile);
         call.enqueue(new Callback<ImageUploadResponse>() {
             @Override
             public void onResponse(Call<ImageUploadResponse> call, Response<ImageUploadResponse> response) {

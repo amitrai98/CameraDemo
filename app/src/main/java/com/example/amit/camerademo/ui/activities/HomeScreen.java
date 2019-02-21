@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.amit.camerademo.R;
 import com.example.amit.camerademo.ui.commonui.BaseActivity;
 import com.example.amit.camerademo.ui.fragments.CameraFragment;
+import com.example.amit.camerademo.ui.fragments.PostListing;
 import com.example.amit.camerademo.ui.viewmodels.CameraViewModel;
 
 public class HomeScreen extends BaseActivity {
@@ -29,7 +30,7 @@ public class HomeScreen extends BaseActivity {
         setContentView(R.layout.activity_base);
         coordinator= findViewById(R.id.coordinator);
         initNetworkErrorDialog();
-        changeFragment(new CameraFragment(), CameraFragment.TAG);
+        changeFragment(new PostListing(), PostListing.TAG);
     }
 
     @Override

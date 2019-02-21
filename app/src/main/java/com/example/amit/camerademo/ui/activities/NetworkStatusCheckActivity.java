@@ -26,13 +26,13 @@ public abstract class NetworkStatusCheckActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        registerNetworkStatusReceiver();
+//        registerNetworkStatusReceiver();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        unRegisterNetworkStatusReceiver();
+//        unRegisterNetworkStatusReceiver();
     }
 
     private void registerNetworkStatusReceiver() {
