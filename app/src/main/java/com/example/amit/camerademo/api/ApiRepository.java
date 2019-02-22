@@ -16,7 +16,7 @@ public class ApiRepository implements ApiTask {
 
 
     @Override
-    public Call<ImageUploadResponse> uploadFile(MultipartBody.Part file, RequestBody name) {
-        return apiTask.uploadFile(file, name);
+    public Call<ImageUploadResponse> uploadFile(String cid, MultipartBody.Part file, RequestBody name) {
+        return apiTask.uploadFile(cid, file, name);
     }
 }

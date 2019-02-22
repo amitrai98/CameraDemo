@@ -11,12 +11,14 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiTask {
 
     @Multipart
-    @POST("/api/beta/content.php?cid=cb92564d4062bae4e5cde57650b88c9a")
-    Call<ImageUploadResponse> uploadFile(@Part MultipartBody.Part file,
+    @POST("/api/beta/content.php")
+    Call<ImageUploadResponse> uploadFile(@Query("cid") String cid,
+                                         @Part MultipartBody.Part file,
                                          @Part("type") RequestBody name);
 
     }

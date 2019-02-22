@@ -13,6 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 public class ApiServiceFactory {
     private static ApiServiceFactory instance;
     private Retrofit retrofit;
+    public static String cid = "cb92564d4062bae4e5cde57650b88c9a";
 
     private ApiServiceFactory() {
         buildRetrofit();
